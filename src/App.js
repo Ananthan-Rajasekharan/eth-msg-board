@@ -14,34 +14,17 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const DUMMY_POSTS = [
-  {
-    ethaddress: "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4",
-    msgValue:
-      "More than half of the financing comes from the International Development Association",
-  },
-  {
-    ethaddress: "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4",
-    msgValue:
-      "That Time I Got Reincarnated as a Slime - Episode 37 [English Sub]",
-  },
-  {
-    ethaddress: "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4",
-    msgValue: "Beyond Console Log in 100 Seconds",
-  },
-];
-
 function App() {
   const ethereum = window.ethereum;
 
   const [txHash, setTxHash] = useState("");
 
-  const [initialPosts, setinitialPosts] = useState("");
+  // const [initialPosts, setinitialPosts] = useState("");
 
   const MyContractJSON = require("./contractjson/MsgBoard.json");
 
   const web3 = new Web3(ethereum);
-  const contractAddress = MyContractJSON.networks["5777"].address;
+  const contractAddress = "0x0721cF6A7a106DFd31f8521597aED7f1d50169A9";
   const contractAbi = MyContractJSON.abi;
 
   const myContract = new web3.eth.Contract(contractAbi, contractAddress);
@@ -50,24 +33,28 @@ function App() {
     getInitialPosts();
   }, []);
 
+  const [posts, setPosts] = useState([]);
+
   const getInitialPosts = async () => {
     const postCount = await myContract.methods.getCount().call();
 
     console.log("Post No: ", postCount);
 
+    let initialPosts = [];
+
     for (let i = 0; i < postCount; i++) {
-      let post = await myContract.methods.posts(0).call();
+      let post = await myContract.methods.posts(i).call();
+      let newPost = {ethaddress: post.ethaddress, msgValue: post.msgValue, userType: post.userType}
 
-      setinitialPosts((prevPosts) => {
-        return [{ethaddress: post.ethaddress, msgValue: post.msgValue}, ...prevPosts];
-      });
-
+      initialPosts.push(newPost)
     }
 
     console.log(initialPosts);
+
+    setPosts(initialPosts.reverse());
   };
 
-  const [posts, setPosts] = useState(DUMMY_POSTS);
+  
 
   const [open, setOpen] = React.useState(false);
 
@@ -104,6 +91,7 @@ function App() {
           key={index}
           ethaddress={value.ethaddress}
           value={value.msgValue}
+          userType={value.userType}
         />
       ))}
       <br />

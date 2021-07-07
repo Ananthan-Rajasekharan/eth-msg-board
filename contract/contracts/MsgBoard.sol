@@ -9,7 +9,16 @@ contract MsgBoard {
         bool userType;
     }
     
-    mapping(address => bool) teachOrNot;
+    modifier onlyTech() {
+        require(teachOrNot[msg.sender] = true, "Not Authorized");
+        _;
+    }
+    
+    mapping(address => bool) public teachOrNot;
+    
+    constructor() {
+        teachOrNot[msg.sender] = true;
+    }
     
     post[] public posts;
     
@@ -19,5 +28,9 @@ contract MsgBoard {
     
     function getCount() view public returns(uint) {
         return posts.length;
+    }
+    
+    function addTeacher(address techAddress) public {
+        teachOrNot[techAddress] = true;
     }
 }

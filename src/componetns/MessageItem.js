@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepOrange[500]),
     backgroundColor: deepOrange[500],
   },
-  purple: {
+  blue: {
     color: theme.palette.getContrastText(blue[500]),
     backgroundColor: blue[500],
   },
@@ -28,13 +28,21 @@ const useStyles = makeStyles((theme) => ({
 
 function MessageItem(props) {
   const classes = useStyles();
-  const userType = classes.orange;
+  let userType = classes.orange;
+  let userSymbol = "S"
+
+  console.log(props.userType)
+
+  if(props.userType) {
+    userType = classes.blue;
+    userSymbol = "T"
+  }  
   
   return (
     <div>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar className={userType}>S</Avatar>
+          <Avatar className={userType}>{userSymbol}</Avatar>
         </ListItemAvatar>
         <ListItemText
           primary={props.value}
