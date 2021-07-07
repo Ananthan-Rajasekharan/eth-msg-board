@@ -84,7 +84,7 @@ function Header(props) {
             <AddCircleOutlineIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            ETHEREUM MESSAGE BOARD
+            MESSAGE BOARD
           </Typography>
           <Button color="inherit" onClick={enableMetaMask}>
             {ethAddress}
