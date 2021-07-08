@@ -4,7 +4,7 @@ import './footer.css'
 
 const Footer = () => (
   <div className="footer">
-    Powered by Phnix Inc ©2021
+    Powered by Gentle Voice ©2021
   </div>
 );
 
