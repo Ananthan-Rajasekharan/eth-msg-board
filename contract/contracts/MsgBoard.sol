@@ -30,7 +30,7 @@ contract MsgBoard {
         return posts.length;
     }
     
-    function addTeacher(address techAddress) public {
+    function addTeacher(address techAddress) onlyTech public {
         teachOrNot[techAddress] = true;
     }
 }

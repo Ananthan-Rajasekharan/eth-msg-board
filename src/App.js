@@ -24,7 +24,7 @@ function App() {
   const MyContractJSON = require("./contractjson/MsgBoard.json");
 
   const web3 = new Web3(ethereum);
-  const contractAddress = "0x0721cF6A7a106DFd31f8521597aED7f1d50169A9"
+  const contractAddress = "0x266cc293Da02E3E23bEEebCaF317a74E220841D6"
   const contractAbi = MyContractJSON.abi;
 
   const myContract = new web3.eth.Contract(contractAbi, contractAddress);
